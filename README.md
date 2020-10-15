@@ -1,4 +1,4 @@
-#ELASTICSEARCH WORKPLACESEARCH DOCKER SERVICE
+# ELASTICSEARCH WORKPLACESEARCH DOCKER SERVICE
 
 This repo has the files to run *Elasticsearch*, *WorkplaceSearch* and *Kibana* on a single **docker-compose** file for testing purposes.
 
