@@ -1,0 +1,62 @@
+---
+version: '2'
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELASTIC_VERSION
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - ELASTIC_PASSWORD=$ELASTIC_PASSWORD
+      - xpack.security.authc.api_key.enabled=true  
+      - xpack.security.enabled=$ELASTIC_SECURITY
+      - xpack.security.authc.realms.native.native1.order=0
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+    networks: ['stack']
+
+  workplace:
+    image: docker.elastic.co/enterprise-search/enterprise-search:$ELASTIC_VERSION
+    restart: always
+    container_name: workplace
+    environment:
+       - elasticsearch.host='http://elasticsearch:9200'
+       - allow_es_settings_modification='true'
+       - elasticsearch.username=elastic
+       - elasticsearch.password=$ELASTIC_PASSWORD
+       - ent_search.listen_host='0.0.0.0'
+       - ent_search.listen_port=3002
+       - ent_search.external_url=$WRK_URL  
+       - ent_search.auth.source=elasticsearch-native
+       - ENT_SEARCH_DEFAULT_PASSWORD=$ELASTIC_PASSWORD
+       - secret_management.encryption_keys=[$ENC_KEY]
+    #volumes:
+       #- ${PWD}/enterprise-search.yml:/usr/share/enterprise-search/config/enterprise-search.yml
+    links: ['elasticsearch']
+    depends_on:
+       - elasticsearch
+    ports:
+       - 3002:3002
+    networks:
+       - stack
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
+    volumes:
+      - ${PWD}/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
+    ports: ['5601:5601']
+    networks: ['stack']
+    #links: ['elasticsearch']
+    links: ['elasticsearch','workplace']
+    depends_on: ['elasticsearch','workplace']
+
+networks:
+  stack: {}
