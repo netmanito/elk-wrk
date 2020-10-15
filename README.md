@@ -59,3 +59,5 @@ Modify the `/etc/hosts` file in your docker host and add `workplace` container a
 ```
 
 Refer to [https://www.elastic.co/guide/en/workplace-search/7.9/index.html](https://www.elastic.co/guide/en/workplace-search/7.9/index.html) for more information on how WorkplaceSearch works.
+
+Versions prior to 7.9.0 of the stack are buggy on their configurations and links between services, try not to configure a version earlier than the current in this project.
