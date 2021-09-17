@@ -1,0 +1,23 @@
+# Default Kibana 5 file from https://github.com/elastic/kibana/blob/master/config/kibana.yml
+# Kibana is served by a back end server. This setting specifies the port to use.
+server.port: 5601
+
+server.host: "0.0.0.0"
+#server.name: "your-hostname"
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+elasticsearch.ssl.verificationMode: none
+kibana.index: ".kibana"
+elasticsearch.requestTimeout: 190000
+#elasticsearch.startupTimeout: 5000
+#xpack.security.authc.providers.basic.native1.enabled: true
+#xpack.security.authc.providers.basic.native1.order: 0
+#elasticsearch.ssl.certificateAuthorities: ["/certs/tls.pem"]
+xpack.security.enabled: false
+xpack.encryptedSavedObjects.encryptionKey: '1234567sldfkgj8901234567890123456789012'
+xpack.ml.enabled: false
+xpack.monitoring.kibana.collection.enabled: false
+monitoring.ui.enabled: false
+#monitoring.ui.elasticsearch.hosts: ["https://192.168.1.102:9200"]
+#monitoring.ui.elasticsearch.username: elastic
+#monitoring.ui.elasticsearch.password: 15092009qt
+
