@@ -25,7 +25,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:$ELASTIC_VERSION
     volumes:
-      - ${PWD}/kibana..noauth.yml:/usr/share/kibana/config/kibana.yml
+      - ${PWD}/kibana.noauth.yml:/usr/share/kibana/config/kibana.yml
     environment:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD
